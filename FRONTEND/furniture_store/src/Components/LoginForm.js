@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function LoginForm() {
-  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  
 
-  const handleUserIdChange = (event) => {
-    setUserId(event.target.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
+
+  const url="http://localhost:8080/api/login";
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -17,7 +20,7 @@ function LoginForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("/api/login", { userId, password });
+      const response = await axios.post(url, { email, password });
       const userRole = response.data;
       if (userRole === "admin") {
         window.location.replace("/admin");
@@ -28,11 +31,8 @@ function LoginForm() {
       else if(userRole ==="carpenter"){
         window.location.replace("/carpenter");
       }
-      else if(userRole ==="customer"){
+      else {
         window.location.replace("/customer");
-      }
-       else {
-        // handle redirect to user page here
       }
     } catch (error) {
       setError(error.response.data);
@@ -41,6 +41,11 @@ function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit}>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
         <h3>Sign In</h3>
         <div className="mb-3">
           <label>User ID</label>
@@ -48,8 +53,8 @@ function LoginForm() {
             type="text"
             className="form-control"
             placeholder="Enter email"
-            value={userId} 
-            onChange={handleUserIdChange}
+            value={email} 
+            onChange={handleEmailChange}
           />
         </div>
         <div className="mb-3">

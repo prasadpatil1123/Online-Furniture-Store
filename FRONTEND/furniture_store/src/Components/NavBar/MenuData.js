@@ -9,9 +9,15 @@ export const MenuData=[
         url: "/login",
         cName: "nav-links",
     },
+   
     {
         title: "Products",
         url: "/products",
+        cName: "nav-links",
+    },
+    {
+        title: "Registration 2",
+        url: "/reg",
         cName: "nav-links",
     }
 
