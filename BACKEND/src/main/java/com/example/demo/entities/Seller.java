@@ -1,11 +1,20 @@
 package com.example.demo.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="seller")
@@ -21,8 +30,9 @@ public class Seller {
 	String password;
 	@Column(name="contact_number")
 	String contact;
-	@Column(name="area_id")
-	int area;
+	@ManyToOne
+	@JoinColumn(name="city_id")
+	City city;	
 	@Column
 	String address;
 	@Column
@@ -34,6 +44,31 @@ public class Seller {
 	@Column(name="role_id")
 	int role;
 	
+	
+	
+	public Seller() {
+		
+	}
+	
+	
+	public City getCity() {
+		return city;
+	}
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+
+	@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> products = new ArrayList<>();
+	
+	public List<Product> getProducts() {
+		return products;
+	}
+	@JsonIgnore
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 	public int getSid() {
 		return sid;
 	}
@@ -64,12 +99,7 @@ public class Seller {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
-	public int getArea() {
-		return area;
-	}
-	public void setArea(int area) {
-		this.area = area;
-	}
+	
 	public String getAddress() {
 		return address;
 	}
@@ -91,8 +121,8 @@ public class Seller {
 	public int getRole() {
 		return role;
 	}
-	public void setRole() {
-		this.role = 1;
+	public void setRole(int role) {
+		this.role = role;
 	}
 		
 }
