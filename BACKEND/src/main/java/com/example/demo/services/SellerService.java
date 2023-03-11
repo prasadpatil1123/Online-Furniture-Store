@@ -38,6 +38,9 @@ public class SellerService {
         s.setContact(seller.getContact());
         s.setEmail(seller.getEmail());
         s.setGstno(seller.getGstno());
+        
+        
+        //encoder
         s.setPassword(seller.getPassword());
         s.setSname(seller.getSname());
         s.setStatus(0);
