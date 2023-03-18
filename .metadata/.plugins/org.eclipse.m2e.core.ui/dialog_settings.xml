@@ -1,33 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.m2e.core.pom.overview">
-		<list key="ciManagementUrl">
-		</list>
-		<list key="ciManagementSystem">
-		</list>
-		<list key="issueManagementSystem">
-		</list>
-		<list key="issueManagementUrl">
-		</list>
 	</section>
 	<section name="org.eclipse.m2e.core.pom.dependencies">
-	</section>
-	<section name="org.eclipse.m2e.core.ui.internal.dialogs.MavenRepositorySearchDialog">
-		<item key="width" value="480"/>
-		<item key="height" value="667"/>
-		<item key="x" value="758"/>
-		<item key="y" value="413"/>
-	</section>
-	<section name="org.eclipse.m2e.editor.dialogs.ManageDependenciesDialog">
-		<item key="width" value="871"/>
-		<item key="height" value="450"/>
-		<item key="x" value="525"/>
-		<item key="y" value="240"/>
-	</section>
-	<section name="org.eclipse.m2e.core.ui.internal.dialogs.EditDependencyDialog">
-		<item key="width" value="480"/>
-		<item key="height" value="450"/>
-		<item key="x" value="720"/>
-		<item key="y" value="240"/>
 	</section>
 </section>

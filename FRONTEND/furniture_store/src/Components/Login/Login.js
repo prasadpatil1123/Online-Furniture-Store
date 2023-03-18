@@ -150,16 +150,16 @@ const handleSubmit = async (event) => {
 
       <div className="text-center pt-1 mb-5 pb-1">
               <button className="mb-4 w-100 btn btn-primary btn-rounded">Sign in</button>
-              <a className="text-muted" href="#!">Forgot password?</a>
+              
             </div>
 
             <div className="d-flex align-items-center justify-content-center mb-4">
               <p className='text-dark my-2'>Dont Have an Account?</p>
-              <a href='/reg'>
               <button outline className='mx-2 btn btn-outline-danger Button'>
+              <a href='/reg' className="create">
                 Create New
-              </button>
               </a>
+              </button>
             </div>
             </form>
 

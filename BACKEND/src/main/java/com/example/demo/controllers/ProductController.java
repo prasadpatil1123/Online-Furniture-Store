@@ -1,9 +1,9 @@
 package com.example.demo.controllers;
 
-import java.io.IOException;
-import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.dto.ProductDTO;
 import com.example.demo.entities.Product;
 import com.example.demo.entities.Seller;
+import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +36,8 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     @GetMapping("/c/search")
     public List<ProductDTO> searchByCategoryName(@RequestParam String categoryName) {
@@ -45,65 +48,54 @@ public class ProductController {
             response.setProductImage(product.getProductImage());
             response.setPname(product.getPname());
             response.setDescription(product.getDescription());
+            response.setPrice(product.getProductDetails().getPrice());
+            if(product.getProductDetails().getStock()>0) {
+            	response.setStock("In Stock");
+            }else
+            {
+            	response.setStock("Out of Stock");
+            }
             response.setSeller(product.getSeller());
             response.setCategory(product.getCategory());
-            response.setRating(product.getRating());
-            response.setPrice(product.getPrice());
-            response.setStock(product.getStock());
             responses.add(response);
         }
         return responses;
     }
     
     @GetMapping("/p/search")
-    public ProductDTO searchByProductName(@RequestParam String productName) {
+    public Product searchByProductName(@RequestParam String productName) {
     	Product products = productRepository.findByName(productName);
     	ProductDTO response=new ProductDTO();
     	response.setPid(products.getPid());
     	response.setPname(products.getPname());
     	response.setDescription(products.getDescription());
-    	response.setPrice(products.getPrice());
+    	
     	response.setProductImage(products.getProductImage());
-    	response.setRating(products.getRating());
-    	response.setStock(products.getStock());    	
+    	
+    	    	
     	response.setCategory(products.getCategory());
     	response.setSeller(products.getSeller());
-    	return response;
+    	return products;
     }
+    
+
+    @GetMapping("/seller/{sellerId}/products/low-stock")
+    public List<Product> getLowStockProducts(@PathVariable int sellerId) {
+      return productRepository.findLowStockProductsBySellerId(sellerId);
+    }
+    
+    @GetMapping("/trendingProducts")
+    public List<Product> getTrendingProducts() {
+        List<Integer> trendingProductIds = orderRepository.findMostFrequentProductId();
+        
+        List<Product> trendingProducts = new ArrayList<>();
+        for (Integer productId : trendingProductIds) {
+            Optional<Product> product = productRepository.findById(productId);
+            product.ifPresent(trendingProducts::add);
+        }
+
+        return trendingProducts;
+    }
+    
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@CrossOrigin(origins = "http://localhost:3000")
-//@RestController
-//@RequestMapping("/api/sellers")
-//public class ProductController {
-//
-//    private final ProductService productService;
-//    
-//    public ProductController(ProductService productService) {
-//        this.productService = productService;
-//    }
-//
-//    @PostMapping("/products")
-//    public Product addProduct(@RequestBody Product product, @RequestParam("sellerId") int sellerId) {
-//        Product newProduct = productService.addProduct(product, sellerId);
-//        return newProduct;
-//    }
-//}

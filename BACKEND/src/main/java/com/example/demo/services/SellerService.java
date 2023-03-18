@@ -21,7 +21,7 @@ public class SellerService {
     @Autowired
     private SellerRepository sellerRepository;
     @Autowired
-    private LoginRepository loginRepository;
+    private LoginRepository loginRepository;	
     @Autowired
     private CityService cityService;
 
@@ -64,8 +64,11 @@ public class SellerService {
     
     public void approveSeller(int sid) {
         Seller seller = sellerRepository.findById(sid).orElse(null);
+        Login login =loginRepository.findEmail(seller.getEmail());
         if (seller != null) {
             seller.setStatus(1);
+            login.setStatus(1);
+            loginRepository.save(login);
             sellerRepository.save(seller);
         }
     }
